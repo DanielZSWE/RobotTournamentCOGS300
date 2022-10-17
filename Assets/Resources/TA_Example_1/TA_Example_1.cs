@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.MLAgents.Sensors;
 using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Actuators;
 
 public class TA_Example_1 : CogsAgent
 {
@@ -32,8 +34,9 @@ public class TA_Example_1 : CogsAgent
     }
 
     // What to do when an action is received (i.e. when the Brain gives the agent information about possible actions)
-    public override void OnActionReceived(float[] act)
+    public override void OnActionReceived(ActionBuffers actions)
     {
+        var act = actions.DiscreteActions;
         AddReward(-0.0005f);
         int forwardAxis = (int)act[0]; //NN output 0
 
@@ -42,9 +45,9 @@ public class TA_Example_1 : CogsAgent
     }
 
     // For manual check of controls 
-    public override void Heuristic(float[] actionsOut)
+    public override void Heuristic(in ActionBuffers actionsOut)
     {
-        var discreteActionsOut = actionsOut;
+        var discreteActionsOut = actionsOut.DiscreteActions;
         discreteActionsOut[0] = 0;
         discreteActionsOut[1] = 0;
         if (Input.GetKey(KeyCode.RightArrow))

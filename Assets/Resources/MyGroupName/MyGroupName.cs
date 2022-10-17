@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.MLAgents.Sensors;
 using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Actuators;
 
 public class MyGroupName : CogsAgent
 {
@@ -60,9 +62,9 @@ public class MyGroupName : CogsAgent
     }
 
     // For manual override of controls. This function will use keyboard presses to simulate output from your NN 
-    public override void Heuristic(float[] actionsOut)
-    {
-        var discreteActionsOut = actionsOut;
+    public override void Heuristic(in ActionBuffers actionsOut)
+{
+        var discreteActionsOut = actionsOut.DiscreteActions;
         discreteActionsOut[0] = 0; //Simulated NN output 0
         discreteActionsOut[1] = 0; //....................1
         discreteActionsOut[2] = 0; //....................2
@@ -107,9 +109,11 @@ public class MyGroupName : CogsAgent
     }
 
         // What to do when an action is received (i.e. when the Brain gives the agent information about possible actions)
-    public override void OnActionReceived(float[] act)
-    {
-        int forwardAxis = (int)act[0]; //NN output 0
+        public override void OnActionReceived(ActionBuffers actions){
+
+        
+
+        int forwardAxis = (int)actions.DiscreteActions[0]; //NN output 0
 
         //TODO-1: Set these variables to their appopriate item from the act list
         int rotateAxis = 0; 
