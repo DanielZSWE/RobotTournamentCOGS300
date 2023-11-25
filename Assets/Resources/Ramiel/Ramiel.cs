@@ -151,6 +151,7 @@ public class Ramiel : CogsAgent
         if (collision.gameObject.CompareTag("HomeBase") && collision.gameObject.GetComponent<HomeBase>().team == GetTeam())
         {
             //Add rewards here
+            AddReward(3f);
         }
         base.OnTriggerEnter(collision);
     }
@@ -163,11 +164,13 @@ public class Ramiel : CogsAgent
         if (collision.gameObject.CompareTag("Target") && collision.gameObject.GetComponent<Target>().GetInBase() != GetTeam() && collision.gameObject.GetComponent<Target>().GetCarried() == 0 && !IsFrozen())
         {
             //Add rewards here
+            AddReward(1f);
         }
 
         if (collision.gameObject.CompareTag("Wall"))
         {
             //Add rewards here
+            AddReward(-1f);
         }
         base.OnCollisionEnter(collision);
     }
@@ -179,11 +182,11 @@ public class Ramiel : CogsAgent
     {
         rewardDict = new Dictionary<string, float>();
 
-        rewardDict.Add("frozen", 0f);
+        rewardDict.Add("frozen", -1f);
         rewardDict.Add("shooting-laser", 0f);
-        rewardDict.Add("hit-enemy", 0f);
-        rewardDict.Add("dropped-one-target", 0f);
-        rewardDict.Add("dropped-targets", 0f);
+        rewardDict.Add("hit-enemy", 2f);
+        rewardDict.Add("dropped-one-target", -1f);
+        rewardDict.Add("dropped-targets", -2f);
     }
 
     private void MovePlayer(int forwardAxis, int rotateAxis, int shootAxis, int goToTargetAxis, int goToBaseAxis)

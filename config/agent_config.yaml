@@ -17,7 +17,13 @@ behaviors:
     reward_signals:
       extrinsic:
         gamma: 0.99
-        strength: 1.0
+        strength: 0.5
+      gail:
+        strength: 0.5
+        demo_path: demos/test.demo
+    behavioral_cloning:
+      strength: 0.5
+      demo_path: demos/test.demo
     #  gail:
     #    strength: 0.5
     #    gamma: 0.9
